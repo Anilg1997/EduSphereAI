@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
 import { GraphqlService } from './services/graphql.service';
 import { AiService } from './services/ai.service';
 
@@ -14,7 +13,7 @@ interface Student {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, JsonPipe],
+  imports: [FormsModule],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
   docForm = { title: '', content: '', source: '' };
 
   // MCP
-  mcpCapabilities: any = null;
+  mcpTools: any[] = [];
   mcpTool = '';
   mcpResult = '';
 
@@ -216,18 +215,33 @@ export class AppComponent implements OnInit {
   // ===== MCP =====
   loadMcpCapabilities() {
     this.ai.mcpCapabilities().subscribe({
-      next: (res: any) => (this.mcpCapabilities = res),
-      error: (err: any) => console.error(err),
+      next: (res: any) => {
+        this.mcpTools = res?.tools || [];
+        if (this.mcpTools.length === 0) {
+          this.mcpResult = 'No MCP tools available';
+        }
+      },
+      error: (err: any) => {
+        console.error(err);
+        this.mcpResult = 'Error loading MCP: ' + err.message;
+      },
     });
   }
 
+  selectMcpTool(name: string) {
+    this.mcpTool = name;
+  }
+
   executeMcpTool() {
+    if (!this.mcpTool) return;
     this.loading = true;
+    this.mcpResult = '';
     this.ai
       .mcpExecute({ tool: this.mcpTool, arguments: {} })
       .subscribe({
         next: (res: any) => {
-          this.mcpResult = JSON.stringify(res, null, 2);
+          const output = res?.output || res;
+          this.mcpResult = typeof output === 'string' ? output : JSON.stringify(output, null, 2);
           this.loading = false;
           this.loadStudents();
         },

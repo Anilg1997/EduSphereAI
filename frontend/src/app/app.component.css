@@ -180,6 +180,47 @@ tr:hover td {
   background: #1e1e3f;
 }
 
+.tool-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tool-card {
+  background: #0f0f1a;
+  border: 1px solid #2a2a4e;
+  border-radius: 8px;
+  padding: 10px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 180px;
+  flex: 1;
+}
+
+.tool-card:hover {
+  border-color: #7c3aed;
+  background: #1e1e3f;
+}
+
+.tool-card.selected {
+  border-color: #7c3aed;
+  background: #2d1b69;
+}
+
+.tool-name {
+  color: #a78bfa;
+  font-size: 14px;
+}
+
+.tool-desc {
+  color: #aaa;
+  font-size: 12px;
+}
+
 pre {
   background: #0f0f1a;
   padding: 12px;

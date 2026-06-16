@@ -27,3 +27,161 @@ NOTE: Raw file sizes do not reflect development server per-request transformatio
   [32m➜[39m  [1mNetwork[22m: [36mhttp://192.168.1.16:[1m4200[22m/[39m
   [32m➜[39m  [1mNetwork[22m: [36mhttp://172.23.144.1:[1m4200[22m/[39m
 [2m[32m  ➜[39m[22m[2m  press [22m[1mh + enter[22m[2m to show help[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [2.231 seconds]
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: JsonPipe is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:17:25:
+[37m      17 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'mcpTools' does not exist on type 'AppComponent'. Did you mean 'mcpTool'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.html:165:13:
+[37m      165 │         @if ([32mmcpTools[37m.length > 0) {
+          ╵              [32m~~~~~~~~[0m
+
+  Error occurs in the template of component AppComponent.
+
+    src/app/app.component.ts:18:15:
+[37m      18 │   templateUrl: [32m'./app.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'mcpTools' does not exist on type 'AppComponent'. Did you mean 'mcpTool'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.html:167:23:
+[37m      167 │             @for (t of [32mmcpTools[37m; track t.name) {
+          ╵                        [32m~~~~~~~~[0m
+
+  Error occurs in the template of component AppComponent.
+
+    src/app/app.component.ts:18:15:
+[37m      18 │   templateUrl: [32m'./app.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'selectMcpTool' does not exist on type 'AppComponent'. Did you mean 'executeMcpTool'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.html:168:46:
+[37m      168 │ ...ass="tool-card" (click)="[32mselectMcpTool[37m(t.name)" [class.selecte...
+          ╵                             [32m~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component AppComponent.
+
+    src/app/app.component.ts:18:15:
+[37m      18 │   templateUrl: [32m'./app.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [1.332 seconds]
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: JsonPipe is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:17:25:
+[37m      17 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+[39m[22m
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mNG1: Property 'selectMcpTool' does not exist on type 'AppComponent'. Did you mean 'executeMcpTool'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.html:168:46:
+[37m      168 │ ...ass="tool-card" (click)="[32mselectMcpTool[37m(t.name)" [class.selecte...
+          ╵                             [32m~~~~~~~~~~~~~[0m
+
+  Error occurs in the template of component AppComponent.
+
+    src/app/app.component.ts:18:15:
+[37m      18 │   templateUrl: [32m'./app.component.html'[37m,
+         ╵                [32m~~~~~~~~~~~~~~~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2551: Property 'mcpCapabilities' does not exist on type 'AppComponent'. Did you mean 'loadMcpCapabilities'?[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:219:32:
+[37m      219 │       next: (res: any) => (this.[32mmcpCapabilities[37m = res),
+          ╵                                 [32m~~~~~~~~~~~~~~~[0m
+
+  'loadMcpCapabilities' is declared here.
+
+    src/app/app.component.ts:217:2:
+[37m      217 │   [32mloadMcpCapabilities[37m() {
+          ╵   [32m~~~~~~~~~~~~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mpolyfills.js[39m       [2m | [22m[2mpolyfills[22m    [2m | [22m [36m89.77 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m [36m61.02 kB[39m[2m | [22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m [36m95 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m[1m150.88 kB[22m
+
+Application bundle generation complete. [1.204 seconds]
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: JsonPipe is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:17:25:
+[37m      17 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+[39m[22m
+Page reload sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m[2m | [22m[1mRaw size[22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m [2m | [22m[36m62.34 kB[39m[2m | [22m
+
+Application bundle generation complete. [2.041 seconds]
+
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mTS-998113: JsonPipe is not used within the template of AppComponent[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:17:25:
+[37m      17 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+[39m[22m
+Component update sent to client(s).
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+Application bundle generation failed. [0.667 seconds]
+
+[1m[31m[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS-991010: 'imports' must be an array of components, directives, pipes, or NgModules.
+  Value could not be determined statically.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:16:25:
+[37m      16 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+  Unknown reference.
+
+    src/app/app.component.ts:16:25:
+[37m      16 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+
+[31mX [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'JsonPipe'.[0m [1m[35m[plugin angular-compiler][0m
+
+    src/app/app.component.ts:16:25:
+[37m      16 │   imports: [FormsModule, [32mJsonPipe[37m],
+         ╵                          [32m~~~~~~~~[0m
+
+[39m[22m
+[33m>[39m Changes detected. Rebuilding...
+[32m√[39m Changes detected. Rebuilding...
+[1mInitial chunk files[22m[2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m
+[32mpolyfills.js[39m       [2m | [22m[2mpolyfills[22m    [2m | [22m [36m89.77 kB[39m[2m | [22m
+[32mmain.js[39m            [2m | [22m[2mmain[22m         [2m | [22m [36m62.27 kB[39m[2m | [22m
+[32mstyles.css[39m         [2m | [22m[2mstyles[22m       [2m | [22m [36m95 bytes[39m[2m | [22m
+
+[1m [22m                  [2m | [22m[1mInitial total[22m[2m | [22m[1m152.13 kB[22m
+
+Application bundle generation complete. [1.084 seconds]
+
+Page reload sent to client(s).
