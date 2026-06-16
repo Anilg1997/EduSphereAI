@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({ providedIn: 'root' })
 export class AiService {
   private baseUrl = '/api/ai';
   private headers = new HttpHeaders({ 'Content-Type': 'application/json' });

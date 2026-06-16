@@ -15,7 +15,6 @@ interface Student {
   selector: 'app-root',
   standalone: true,
   imports: [FormsModule, JsonPipe],
-  providers: [GraphqlService, AiService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
@@ -63,25 +62,43 @@ export class AppComponent implements OnInit {
 
   // ===== Student CRUD =====
   loadStudents() {
+    console.log('Loading students...');
     this.gql.query(`{ getStudents { id name email course } }`).subscribe({
-      next: (res: any) => (this.students = res.data.getStudents || []),
-      error: (err: any) => (this.studentResult = 'Error: ' + err.message),
+      next: (res: any) => {
+        console.log('Students loaded:', res);
+        this.students = res?.data?.getStudents || [];
+        this.studentResult = `Loaded ${this.students.length} students`;
+      },
+      error: (err: any) => {
+        console.error('Load error:', err);
+        this.studentResult = 'Error: ' + err.message;
+      },
     });
   }
 
   createStudent() {
     const { name, email, course } = this.studentForm;
+    if (!name || !email || !course) {
+      this.studentResult = 'Please fill all fields';
+      return;
+    }
+    this.studentResult = 'Creating...';
     this.gql
       .mutate(
         `mutation($n:String!,$e:String!,$c:String!){createStudent(name:$n,email:$e,course:$c){id name email course}}`,
         { n: name, e: email, c: course }
       )
       .subscribe({
-        next: () => {
-          this.studentResult = 'Created!';
+        next: (res: any) => {
+          console.log('Create response:', res);
+          this.studentResult = 'Created! Refreshing list...';
+          this.studentForm = { id: '', name: '', email: '', course: '' };
           this.loadStudents();
         },
-        error: (err: any) => (this.studentResult = 'Error: ' + err.message),
+        error: (err: any) => {
+          console.error('Create error:', err);
+          this.studentResult = 'Error: ' + err.message;
+        },
       });
   }
 
