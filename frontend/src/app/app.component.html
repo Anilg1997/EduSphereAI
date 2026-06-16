@@ -51,6 +51,9 @@
       <div class="section">
         <h2>AI Chat (Ollama llama3.2)</h2>
         <p class="hint">Ask anything — powered by Ollama + LangChain4j</p>
+        <div class="sample-prompts">
+          Try: <code>"What is Java?"</code> <code>"Explain GraphQL"</code> <code>"Tell me a joke"</code>
+        </div>
         <div class="form-row">
           <input [(ngModel)]="chatMessage" placeholder="Type your message..." class="wide" />
           <button (click)="sendChat()" [disabled]="loading">Send</button>
@@ -69,7 +72,10 @@
     @if (activeTab === 'rag') {
       <div class="section">
         <h2>RAG (Retrieval Augmented Generation)</h2>
-        <p class="hint">Ask about documents — context is retrieved from vector store before answering</p>
+        <p class="hint">First seed documents in the <strong>Documents</strong> tab, then ask questions about them</p>
+        <div class="sample-prompts">
+          Try: <code>"What is Java?"</code> <code>"Explain Spring Boot"</code> <code>"What is GraphQL?"</code> <code>"Tell me about MongoDB"</code>
+        </div>
         <div class="form-row">
           <input [(ngModel)]="ragQuestion" placeholder="Ask a question about your documents..." class="wide" />
           <button (click)="askRag()" [disabled]="loading">Ask</button>
@@ -98,7 +104,10 @@
     @if (activeTab === 'agent') {
       <div class="section">
         <h2>AI Agent (Tool-Using)</h2>
-        <p class="hint">Try: "list all students", "delete student", "search documents", or any question</p>
+        <p class="hint">The agent can CRUD students, answer questions, and search documents</p>
+        <div class="sample-prompts">
+          Try: <code>"list all students"</code> <code>"create student name John course CS"</code> <code>"what is Java?"</code> <code>"say hello"</code>
+        </div>
         <div class="form-row">
           <input [(ngModel)]="agentTask" placeholder="What should I do?" class="wide" />
           <button (click)="runAgent()" [disabled]="loading">Run</button>
@@ -117,6 +126,7 @@
     @if (activeTab === 'docs') {
       <div class="section">
         <h2>Document Store (Vector Database)</h2>
+        <p class="hint">Documents are stored in MongoDB and embedded into the vector store for RAG queries</p>
         <div class="form-row">
           <input [(ngModel)]="docForm.title" placeholder="Title" />
           <input [(ngModel)]="docForm.content" placeholder="Content" class="wide" />
@@ -124,6 +134,7 @@
           <button (click)="addDocument()">Add</button>
           <button (click)="ingestDocuments()">Seed Defaults</button>
         </div>
+        <p class="hint">Click <strong>"Seed Defaults"</strong> to add 5 sample documents (Java, Spring Boot, GraphQL, MongoDB, LangChain4j) then try the <strong>RAG</strong> tab</p>
         @if (documents.length > 0) {
           <table>
             <thead>
