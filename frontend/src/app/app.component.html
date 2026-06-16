@@ -1,0 +1,178 @@
+<div class="app-container">
+  <h1>{{ title }}</h1>
+
+  <div class="tabs">
+    <button [class.active]="activeTab === 'students'" (click)="activeTab = 'students'">📚 Students CRUD</button>
+    <button [class.active]="activeTab === 'chat'" (click)="activeTab = 'chat'">💬 AI Chat</button>
+    <button [class.active]="activeTab === 'rag'" (click)="activeTab = 'rag'">🔍 RAG Query</button>
+    <button [class.active]="activeTab === 'agent'" (click)="activeTab = 'agent'">🤖 AI Agent</button>
+    <button [class.active]="activeTab === 'docs'" (click)="activeTab = 'docs'; loadDocuments()">📄 Documents</button>
+    <button [class.active]="activeTab === 'mcp'" (click)="activeTab = 'mcp'; loadMcpCapabilities()">🔌 MCP</button>
+  </div>
+
+  <div class="tab-content">
+
+    <!-- ===== STUDENTS CRUD ===== -->
+    @if (activeTab === 'students') {
+      <div class="section">
+        <h2>Student CRUD (GraphQL)</h2>
+        <div class="form-row">
+          <input [(ngModel)]="studentForm.name" placeholder="Name" />
+          <input [(ngModel)]="studentForm.email" placeholder="Email" />
+          <input [(ngModel)]="studentForm.course" placeholder="Course" />
+          <button (click)="createStudent()">Create</button>
+          <button (click)="updateStudent()">Update</button>
+        </div>
+        <p class="result">{{ studentResult }}</p>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Email</th><th>Course</th><th>Actions</th></tr>
+          </thead>
+          <tbody>
+            @for (s of students; track s.id) {
+              <tr>
+                <td>{{ s.id }}</td>
+                <td>{{ s.name }}</td>
+                <td>{{ s.email }}</td>
+                <td>{{ s.course }}</td>
+                <td>
+                  <button (click)="editStudent(s)">Edit</button>
+                  <button class="danger" (click)="deleteStudent(s.id)">Delete</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+
+    <!-- ===== AI CHAT ===== -->
+    @if (activeTab === 'chat') {
+      <div class="section">
+        <h2>AI Chat (Ollama llama3.2)</h2>
+        <p class="hint">Ask anything — powered by Ollama + LangChain4j</p>
+        <div class="form-row">
+          <input [(ngModel)]="chatMessage" placeholder="Type your message..." class="wide" />
+          <button (click)="sendChat()" [disabled]="loading">Send</button>
+        </div>
+        @if (loading) { <p class="loading">Thinking...</p> }
+        @if (chatResponse) {
+          <div class="response-box">
+            <strong>Response:</strong>
+            <p>{{ chatResponse }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ===== RAG ===== -->
+    @if (activeTab === 'rag') {
+      <div class="section">
+        <h2>RAG (Retrieval Augmented Generation)</h2>
+        <p class="hint">Ask about documents — context is retrieved from vector store before answering</p>
+        <div class="form-row">
+          <input [(ngModel)]="ragQuestion" placeholder="Ask a question about your documents..." class="wide" />
+          <button (click)="askRag()" [disabled]="loading">Ask</button>
+        </div>
+        @if (loading) { <p class="loading">Retrieving & generating...</p> }
+        @if (ragResponse) {
+          <div class="response-box">
+            <strong>Answer:</strong>
+            <p>{{ ragResponse }}</p>
+          </div>
+        }
+        @if (ragSources.length > 0) {
+          <div class="sources">
+            <strong>Sources:</strong>
+            <ul>
+              @for (src of ragSources; track src) {
+                <li>{{ src }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ===== AGENT ===== -->
+    @if (activeTab === 'agent') {
+      <div class="section">
+        <h2>AI Agent (Tool-Using)</h2>
+        <p class="hint">Try: "list all students", "delete student", "search documents", or any question</p>
+        <div class="form-row">
+          <input [(ngModel)]="agentTask" placeholder="What should I do?" class="wide" />
+          <button (click)="runAgent()" [disabled]="loading">Run</button>
+        </div>
+        @if (loading) { <p class="loading">Agent processing...</p> }
+        @if (agentResponse) {
+          <div class="response-box">
+            <strong>Agent Response:</strong>
+            <p>{{ agentResponse }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- ===== DOCUMENTS ===== -->
+    @if (activeTab === 'docs') {
+      <div class="section">
+        <h2>Document Store (Vector Database)</h2>
+        <div class="form-row">
+          <input [(ngModel)]="docForm.title" placeholder="Title" />
+          <input [(ngModel)]="docForm.content" placeholder="Content" class="wide" />
+          <input [(ngModel)]="docForm.source" placeholder="Source" />
+          <button (click)="addDocument()">Add</button>
+          <button (click)="ingestDocuments()">Seed Defaults</button>
+        </div>
+        @if (documents.length > 0) {
+          <table>
+            <thead>
+              <tr><th>ID</th><th>Title</th><th>Content</th><th>Source</th></tr>
+            </thead>
+            <tbody>
+              @for (d of documents; track d.id) {
+                <tr>
+                  <td>{{ d.id }}</td>
+                  <td>{{ d.title }}</td>
+                  <td>{{ d.content }}</td>
+                  <td>{{ d.source }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        } @else {
+          <p>No documents. Click "Seed Defaults" to add sample documents.</p>
+        }
+      </div>
+    }
+
+    <!-- ===== MCP ===== -->
+    @if (activeTab === 'mcp') {
+      <div class="section">
+        <h2>MCP - Model Context Protocol</h2>
+        <p class="hint">MCP allows AI models to discover and call tools dynamically</p>
+        @if (mcpCapabilities) {
+          <div class="response-box">
+            <strong>Available Tools:</strong>
+            <pre>{{ mcpCapabilities | json }}</pre>
+          </div>
+        }
+        <div class="form-row">
+          <input [(ngModel)]="mcpTool" placeholder="Tool name (e.g., getAllStudents)" class="wide" />
+          <button (click)="executeMcpTool()" [disabled]="loading">Execute</button>
+        </div>
+        @if (mcpResult) {
+          <div class="response-box">
+            <strong>Result:</strong>
+            <pre>{{ mcpResult }}</pre>
+          </div>
+        }
+      </div>
+    }
+
+  </div>
+
+  <div class="footer">
+    <p>Backend: Spring Boot + LangChain4j | LLM: Ollama (llama3.2) | DB: MongoDB</p>
+  </div>
+</div>

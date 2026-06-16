@@ -1,0 +1,66 @@
+# ========== Student CRUD Types ==========
+
+type Student {
+    id: ID
+    name: String
+    email: String
+    course: String
+}
+
+type Query {
+    getStudents: [Student]
+    getStudent(id: ID!): Student
+    aiChat(message: String!): AiResponse
+    aiRag(question: String!): AiResponse
+    aiAgent(task: String!): AiResponse
+    getDocuments: [DocumentInfo]
+    mcpCapabilities: [McpCapability]
+}
+
+type Mutation {
+    createStudent(
+        name: String!
+        email: String!
+        course: String!
+    ): Student
+    updateStudent(
+        id: ID!
+        name: String!
+        email: String!
+        course: String!
+    ): Student
+    deleteStudent(id: ID!): String
+    addDocument(title: String!, content: String!, source: String): DocumentInfo
+    ingestDocuments: String
+    deleteDocument(id: ID!): String
+    mcpExecute(tool: String!, arguments: JSON): JSON
+}
+
+# ========== AI Types ==========
+
+type AiResponse {
+    response: String!
+    sources: [String]
+    metadata: JSON
+}
+
+type McpCapability {
+    name: String
+    description: String
+    parameters: [McpParameter]
+}
+
+type McpParameter {
+    name: String
+    type: String
+    required: Boolean
+}
+
+type DocumentInfo {
+    id: ID
+    title: String
+    content: String
+    source: String
+}
+
+scalar JSON

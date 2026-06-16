@@ -1,0 +1,3 @@
+@echo off
+echo Starting Spring Boot Backend...
+start "Backend" cmd /c "mvnw.cmd spring-boot:run"
