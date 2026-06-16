@@ -45,6 +45,8 @@ export class AppComponent implements OnInit {
   // MCP
   mcpTools: any[] = [];
   mcpTool = '';
+  mcpArgs: any = {};
+  mcpArgKeys: string[] = [];
   mcpResult = '';
 
   activeTab = 'students';
@@ -230,6 +232,16 @@ export class AppComponent implements OnInit {
 
   selectMcpTool(name: string) {
     this.mcpTool = name;
+    this.mcpArgs = {};
+    this.mcpArgKeys = [];
+    this.mcpResult = '';
+    const tool = this.mcpTools.find(t => t.name === name);
+    if (tool?.parameters) {
+      for (const p of tool.parameters) {
+        this.mcpArgs[p.name] = '';
+        this.mcpArgKeys.push(p.name);
+      }
+    }
   }
 
   executeMcpTool() {
@@ -237,11 +249,17 @@ export class AppComponent implements OnInit {
     this.loading = true;
     this.mcpResult = '';
     this.ai
-      .mcpExecute({ tool: this.mcpTool, arguments: {} })
+      .mcpExecute({ tool: this.mcpTool, arguments: this.mcpArgs })
       .subscribe({
         next: (res: any) => {
           const output = res?.output || res;
-          this.mcpResult = typeof output === 'string' ? output : JSON.stringify(output, null, 2);
+          if (typeof output === 'string') {
+            this.mcpResult = output;
+          } else if (Array.isArray(output)) {
+            this.mcpResult = output.length + ' results\n' + JSON.stringify(output, null, 2);
+          } else {
+            this.mcpResult = JSON.stringify(output, null, 2);
+          }
           this.loading = false;
           this.loadStudents();
         },
