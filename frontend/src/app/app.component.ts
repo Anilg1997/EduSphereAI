@@ -1,7 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { JsonPipe, CommonModule } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import { GraphqlService } from './services/graphql.service';
 import { AiService } from './services/ai.service';
 
@@ -15,12 +14,12 @@ interface Student {
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [FormsModule, HttpClientModule, JsonPipe],
+  imports: [FormsModule, JsonPipe],
   providers: [GraphqlService, AiService],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'GraphQL Angular - AI RAG Agent';
 
   // Student CRUD
